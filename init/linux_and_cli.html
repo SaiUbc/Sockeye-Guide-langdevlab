@@ -1,0 +1,914 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Differential Equations &#8212; Applied Linear Algebra</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/main.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/main.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-VXJGYXTXDR"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-VXJGYXTXDR');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'systems/odes';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Subspaces" href="../orthogonality/subspaces.html" />
+    <link rel="prev" title="Interpolation" href="interpolation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/nn.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/nn.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Systems of Equations</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lu.html">LU Decomposition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="error.html">Error Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">Interpolation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Differential Equations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Orthogonality</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../orthogonality/subspaces.html">Subspaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../orthogonality/complement.html">Orthogonal Complement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../orthogonality/projection.html">Orthogonal Projection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../orthogonality/qr.html">QR Decomposition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../orthogonality/least_squares.html">Least Squares Approximation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Eigenvalues</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../eigenvalues/diagonalization.html">Diagonalization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../eigenvalues/svd.html">Singular Value Decomposition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../eigenvalues/computing_eigenvalues.html">Computing Eigenvalues</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Dicrete Fourier Transform</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../dft/complex.html">Complex Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dft/dft.html">Discrete Fourier Transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dft/frequency.html">Frequency, Amplitude and Phase</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dft/fft.html">Fast Fourier Transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dft/convolution.html">Convolution and Filtering</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Jupyter Notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/01_linear_systems.html">Linear Systems of Equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/02_LU_decomposition.html">LU Decomposition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/03_polynomial_interpolation.html">Polynomial Interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/04_spline_interpolation.html">Natural Cubic Spline Interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/05_finite_difference_method.html">Finite Difference Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/06_least_squares_regression.html">Fitting Models to Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/07_pca.html">Principal Component Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/08_deblurring_images.html">Deblurring Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/09_computed_tomography.html">Computed Tomography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/10_computing_eigenvalues.html">Computing Eigenvalues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/12_fft.html">Discrete Fourier Transform</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../appendix/multiplication.html">Matrix Multiplication</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/UBCMath/math307" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/systems/odes.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Differential Equations</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#second-order-differential-equations">Second Order Differential Equations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-difference-method">Finite Difference Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="differential-equations">
+<h1>Differential Equations<a class="headerlink" href="#differential-equations" title="Permalink to this heading">#</a></h1>
+<div class="bigidea docutils">
+<p>Most differential equations are impossible to solve exactly and so we use numerical methods such as the finite difference method to approximate solutions. The finite difference method applied to a linear differential equation yields a linear system of equations <span class="math notranslate nohighlight">\(A \boldsymbol{y} = \boldsymbol{b}\)</span>.</p>
+</div>
+<section id="second-order-differential-equations">
+<h2>Second Order Differential Equations<a class="headerlink" href="#second-order-differential-equations" title="Permalink to this heading">#</a></h2>
+<div class="definition docutils">
+<p>An <strong>ordinary differential equation</strong> is an equation involving an unknown function <span class="math notranslate nohighlight">\(y(t)\)</span> and its derivatives. The <strong>order</strong> of a differential equation is the highest order derivative appearing in the equation. There are many kinds of differential equations. In this section, we consider only <strong>second order linear ordinary differential equations</strong></p>
+<div class="math notranslate nohighlight">
+\[
+y'' + p(t)y' + q(t)y = r(t)
+\]</div>
+<p><strong>Boundary conditions</strong> are equations imposed on the solution at the boundary points <span class="math notranslate nohighlight">\(t_0\)</span> and <span class="math notranslate nohighlight">\(t_f\)</span>. For example, specify values of the solution <span class="math notranslate nohighlight">\(y(t)\)</span> at the endpoints</p>
+<div class="math notranslate nohighlight">
+\[
+y(t_0) = \alpha \hspace{5mm} y(t_f) = \beta
+\]</div>
+<p>or specify a value of the solution <span class="math notranslate nohighlight">\(y(t)\)</span> at one endpoint and a value of the derivative <span class="math notranslate nohighlight">\(y'(t)\)</span> at the other endpoint</p>
+<div class="math notranslate nohighlight">
+\[
+y'(t_0) = \alpha \hspace{5mm} y(t_f) = \beta
+\]</div>
+<p>See <a class="reference external" href="https://en.wikipedia.org/wiki/Differential_equation">Wikipedia:Differential equation</a>.</p>
+</div>
+</section>
+<section id="finite-difference-method">
+<h2>Finite Difference Method<a class="headerlink" href="#finite-difference-method" title="Permalink to this heading">#</a></h2>
+<div class="definition docutils">
+<p>The <strong>Taylor series</strong> of a smooth function <span class="math notranslate nohighlight">\(f(x)\)</span> centered at <span class="math notranslate nohighlight">\(x=a\)</span> is</p>
+<div class="math notranslate nohighlight">
+\[
+f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!} (x-a)^n = f(a) + f'(a)(x-a) + \frac{f''(a)}{2}(x-a)^2 + \frac{f'''(a)}{6}(x-a)^3 + \cdots
+\]</div>
+<p>See <a class="reference external" href="https://en.wikipedia.org/wiki/Taylor_series">Wikipedia:Taylor series</a>.</p>
+</div>
+<div class="definition docutils">
+<p><strong>Finite difference formulas</strong> are derived from Taylor series. Let <span class="math notranslate nohighlight">\(y(t)\)</span> be a smooth function and consider the Taylor series</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+y(t+h) &amp;= y(t) + y'(t)h + \frac{y''(t)}{2}h^2 + \cdots \\
+y(t-h) &amp;= y(t) - y'(t)h + \frac{y''(t)}{2}h^2 + \cdots
+\end{align*}
+\end{split}\]</div>
+<p>Truncate and rearrange the first series for the <strong>forward difference formula</strong></p>
+<div class="math notranslate nohighlight">
+\[
+y'(t) \approx \frac{y(t+h) - y(t)}{h}
+\]</div>
+<p>Truncate and rearrange the second series for the <strong>backward difference formula</strong></p>
+<div class="math notranslate nohighlight">
+\[
+y'(t) \approx \frac{y(t) - y(t - h)}{h}
+\]</div>
+<p>Subtract <span class="math notranslate nohighlight">\(y(t+h) - y(t-h)\)</span> and truncate to get the (first order) <strong>central difference formula</strong></p>
+<div class="math notranslate nohighlight">
+\[
+y'(t) \approx \frac{y(t+h) - y(t-h)}{2h}
+\]</div>
+<p>Add <span class="math notranslate nohighlight">\(y(t+h) + y(t-h)\)</span> and truncate to get the (second order) <strong>central difference formula</strong></p>
+<div class="math notranslate nohighlight">
+\[
+y''(t) \approx \frac{y(t+h) -2y(t) + y(t-h)}{h^2}
+\]</div>
+<p>See <a class="reference external" href="https://en.wikipedia.org/wiki/Finite_difference">Wikipedia:Finite difference</a>.</p>
+</div>
+<div class="definition docutils">
+<p>The <strong>finite difference method</strong> applied to a second order linear ordinary differential equation with boundary conditions</p>
+<div class="math notranslate nohighlight">
+\[
+y'' + p(t)y' + q(t)y = r(t) \ \ , \ \ t \in [t_0,t_f]
+\]</div>
+<ol class="arabic">
+<li><p>Discretize the domain: choose <span class="math notranslate nohighlight">\(N\)</span>, let <span class="math notranslate nohighlight">\(\displaystyle h = \frac{t_f - t_0}{N+1}\)</span> and define <span class="math notranslate nohighlight">\(t_k = t_0 + kh\)</span>.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(y_k \approx y(t_k)\)</span> denote the approximation of the solution at <span class="math notranslate nohighlight">\(t_k\)</span>.</p></li>
+<li><p>Substitute finite difference formulas into the equation to define an equation at each <span class="math notranslate nohighlight">\(t_k\)</span>.</p></li>
+<li><p>Rearrange the system of equations into a linear system <span class="math notranslate nohighlight">\(A \boldsymbol{y} = \boldsymbol{b}\)</span> and solve for</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+   \boldsymbol{y} = \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_N \end{bmatrix}
+   \end{split}\]</div>
+</li>
+</ol>
+</div>
+<div class="example docutils">
+<p>Consider a second order linear ordinary differential equation with boundary conditions of the form</p>
+<div class="math notranslate nohighlight">
+\[
+y'' = r(t) \ \ , \ \ y(t_0) = \alpha \ , \ \ y(t_f) = \beta
+\]</div>
+<p>Choose <span class="math notranslate nohighlight">\(N\)</span> and let  <span class="math notranslate nohighlight">\(\displaystyle h = (t_f - t_0)/(N+1)\)</span> and define <span class="math notranslate nohighlight">\(t_k = t_0 + kh\)</span>. Let <span class="math notranslate nohighlight">\(y_k\)</span> denote an approximation of <span class="math notranslate nohighlight">\(y(t_k)\)</span>. Note that the boundary conditions give us <span class="math notranslate nohighlight">\(y_0 = \alpha\)</span> and <span class="math notranslate nohighlight">\(y_{N+1} = \beta\)</span> and let</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{y} = \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_N \end{bmatrix}
+\end{split}\]</div>
+<p>Let <span class="math notranslate nohighlight">\(r_k = r(t_k)\)</span> and substitute the central difference formula at <span class="math notranslate nohighlight">\(t_k\)</span> into the differential equation</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{y_{k+1} -2y_k + y_{k-1}}{h^2} = r_k
+\]</div>
+<p>Therefore we have <span class="math notranslate nohighlight">\(N\)</span> equations and <span class="math notranslate nohighlight">\(N\)</span> unknowns <span class="math notranslate nohighlight">\(y_k\)</span> for <span class="math notranslate nohighlight">\(k=1,\dots,N\)</span>. Use the boundary conditions <span class="math notranslate nohighlight">\(y_0 = \alpha\)</span> and <span class="math notranslate nohighlight">\(y_{N+1} = \beta\)</span> and rearrange the equations</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{rrrrrrcrrrrcc}
+- 2y_1 &amp; + &amp; y_2 &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; = &amp; h^2 r_1 - \alpha \\
+y_1 &amp; - &amp; 2y_2 &amp; + &amp; y_3 &amp; &amp; &amp; &amp; &amp; &amp; &amp; = &amp; h^2 r_2 \\
+&amp; &amp; y_2 &amp; - &amp; 2y_3 &amp; + &amp; y_4 &amp; &amp; &amp; &amp; &amp; = &amp; h^2 r_3 \\
+&amp; &amp; &amp; &amp; &amp; &amp; \ddots &amp; &amp; &amp; &amp; &amp; \vdots &amp; \\
+&amp; &amp; &amp; &amp; &amp; &amp; y_{N-2} &amp; - &amp; 2y_{N-1} &amp; + &amp; y_N &amp; = &amp; h^2 r_{N-1} \\
+&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; y_{N-1} &amp; - &amp; 2y_N &amp; = &amp; h^2 r_N - \beta
+\end{array}
+\end{split}\]</div>
+<p>Rewrite in matrix form <span class="math notranslate nohighlight">\(A \boldsymbol{y} = \boldsymbol{b}\)</span> where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A =
+\left[ \begin{array}{rrcrr}
+-2 &amp; 1 &amp; &amp; &amp; \\
+1 &amp; -2 &amp; 1 &amp; &amp; \\
+&amp; &amp; \ddots &amp; &amp; \\
+&amp; &amp; 1 &amp; -2 &amp; 1 \\
+&amp; &amp; &amp; 1 &amp; -2
+\end{array} \right]
+\hspace{10mm}
+\boldsymbol{b} =
+\begin{bmatrix}
+h^2 r_1 - \alpha \\ h^2 r_2 \\ \vdots \\ h^2 r_{N-1} \\ h^2 r_N - \beta
+\end{bmatrix}
+\end{split}\]</div>
+</div>
+<div class="example docutils">
+<p>Setup a linear system <span class="math notranslate nohighlight">\(A \boldsymbol{y} = \boldsymbol{b}\)</span> for the equation with boundary conditions</p>
+<div class="math notranslate nohighlight">
+\[
+y'' = -2 \ \ , \ \ y(0) = 0 \ , \ \ y(1) = 0
+\]</div>
+<p>using step size <span class="math notranslate nohighlight">\(h=0.2\)</span>.</p>
+<p>The step size <span class="math notranslate nohighlight">\(h\)</span> corresponds to <span class="math notranslate nohighlight">\(N=4\)</span> in our formulation, and <span class="math notranslate nohighlight">\(r(t) = -2\)</span>, <span class="math notranslate nohighlight">\(\alpha = \beta = 0\)</span> therefore</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left[ \begin{array}{rrrr}
+-2 &amp; 1 &amp; &amp; \\
+1 &amp; -2 &amp; 1 &amp; \\
+&amp; 1 &amp; -2 &amp; 1 \\
+&amp; &amp; 1 &amp; -2
+\end{array} \right]
+\begin{bmatrix} y_1 \\ y_2 \\ y_3 \\ y_4 \end{bmatrix}
+=
+\begin{bmatrix} -0.08 \\ -0.08 \\ -0.08 \\ -0.08 \end{bmatrix}
+\end{split}\]</div>
+<p>Solve the system to find</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix} y_1 \\ y_2 \\ y_3 \\ y_4 \end{bmatrix}
+=
+\begin{bmatrix} 0.16 \\ 0.24 \\ 0.24 \\ 0.16 \end{bmatrix}
+\end{split}\]</div>
+<p>The equation is very simple and we can solve exactly by integrating twice</p>
+<div class="math notranslate nohighlight">
+\[
+y(t) = -t^2 + C_1t + C_2
+\]</div>
+<p>The boundary conditions imply <span class="math notranslate nohighlight">\(C_1 = 1\)</span> and <span class="math notranslate nohighlight">\(C_2 = 0\)</span> and therefore the exact solution is</p>
+<div class="math notranslate nohighlight">
+\[
+y(t) = t - t^2
+\]</div>
+<p>Notice that our finite difference approximation found the exact values <span class="math notranslate nohighlight">\(y(0.2) = 0.16\)</span>, <span class="math notranslate nohighlight">\(y(0.4) = 0.24\)</span>, <span class="math notranslate nohighlight">\(y(0.6) = 0.24\)</span>, <span class="math notranslate nohighlight">\(y(0.8) = 0.16\)</span>. This is because our equation is very simple and the solution is a polynomial of degree 2. The finite difference method does not compute exact values in general.</p>
+<a class="reference internal image-reference" href="../_images/01_04_01.png"><img alt="../_images/01_04_01.png" class="align-center" src="../_images/01_04_01.png" style="width: 500px;" /></a>
+</div>
+<div class="example docutils">
+<p>Setup a linear system <span class="math notranslate nohighlight">\(A \boldsymbol{y} = \boldsymbol{b}\)</span> for the equation with boundary conditions</p>
+<div class="math notranslate nohighlight">
+\[
+y'' = \cos(t) \ \ , \ \ y(0) = 0 \ , \ \ y(2\pi) = 1
+\]</div>
+<p>using 7 equally spaced points from <span class="math notranslate nohighlight">\(t_0 = 0\)</span> to <span class="math notranslate nohighlight">\(t_f = 2\pi\)</span>.</p>
+<p>The value <span class="math notranslate nohighlight">\(N=5\)</span> corresponds to 7 equally spaced points in our formulation with step size</p>
+<div class="math notranslate nohighlight">
+\[
+h = \frac{t_f - t_0}{N + 1} = \frac{2\pi - 0}{5 + 1} = \frac{\pi}{3}
+\]</div>
+<p>We have <span class="math notranslate nohighlight">\(r(t) = \cos(t)\)</span> and <span class="math notranslate nohighlight">\(\alpha = 0\)</span> and <span class="math notranslate nohighlight">\(\beta = 1\)</span>. Note that <span class="math notranslate nohighlight">\(r_k = \cos(k\pi/3)\)</span> therefore</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left[ \begin{array}{rrrrr}
+-2 &amp; 1 &amp; &amp; &amp; \\
+1 &amp; -2 &amp; 1 &amp; &amp; \\
+&amp; 1 &amp; -2 &amp; 1 &amp; \\
+&amp; &amp; 1 &amp; -2 &amp; 1 \\
+&amp; &amp; &amp; 1 &amp; -2
+\end{array} \right]
+\begin{bmatrix} y_1 \\ y_2 \\ y_3 \\ y_4 \\ y_5 \end{bmatrix}
+=
+\begin{bmatrix} \pi^2/18 \\ -\pi^2/18 \\ -\pi^2/9 \\ -\pi^2/18 \\ \pi^2/18 - 1 \end{bmatrix}
+\end{split}\]</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">scipy.linalg.solve</span></code> to compute the solution. The equation is elementary and we can solve exactly by integrating twice</p>
+<div class="math notranslate nohighlight">
+\[
+y(t) = 1 - \cos(t) + \frac{t}{2 \pi}
+\]</div>
+<p>Plot the exact solution together with our approximation</p>
+<a class="reference internal image-reference" href="../_images/01_04_02.png"><img alt="../_images/01_04_02.png" class="align-center" src="../_images/01_04_02.png" style="width: 500px;" /></a>
+</div>
+<div class="note docutils">
+<p>Increasing the number of points in the discretization (equivalently, decreasing the step size <span class="math notranslate nohighlight">\(h\)</span>) decreases the error but increases the number of computations. This is a general principle in numerical computing: <em>higher accuracy requires more computations</em>. For example, consider the same equation as the previous example</p>
+<div class="math notranslate nohighlight">
+\[
+y'' = \cos(t) \ \ , \ \ y(0) = 0 \ , \ \ y(2\pi) = 1
+\]</div>
+<p>but now use 21 equally spaced points from <span class="math notranslate nohighlight">\(t_0 = 0\)</span> to <span class="math notranslate nohighlight">\(t_f = 2\pi\)</span>. Then <span class="math notranslate nohighlight">\(N=19\)</span> and</p>
+<div class="math notranslate nohighlight">
+\[
+h = \frac{t_f - t_0}{N + 1} = \frac{2\pi - 0}{19 + 1} = \frac{\pi}{10}
+\]</div>
+<p>and the finite difference method produces a much better solution</p>
+<a class="reference internal image-reference" href="../_images/01_04_03.png"><img alt="../_images/01_04_03.png" class="align-center" src="../_images/01_04_03.png" style="width: 500px;" /></a>
+</div>
+<div class="example docutils">
+<p>Consider the general form of a second order linear ordinary differential equation with boundary conditions</p>
+<div class="math notranslate nohighlight">
+\[
+y'' + p(t)y' + q(t)y = r(t) \ \ , \ \ y(t_0) = \alpha \ , \ \ y(t_f) = \beta
+\]</div>
+<p>Choose <span class="math notranslate nohighlight">\(N\)</span> and let  <span class="math notranslate nohighlight">\(\displaystyle h = \frac{t_f - t_0}{N+1}\)</span> and define <span class="math notranslate nohighlight">\(t_k = t_0 + kh\)</span>. Let <span class="math notranslate nohighlight">\(y_k\)</span> denote an approximation of <span class="math notranslate nohighlight">\(y(t_k)\)</span>. Note that the boundary conditions give us <span class="math notranslate nohighlight">\(y_0 = \alpha\)</span> and <span class="math notranslate nohighlight">\(y_{N+1} = \beta\)</span> and let</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{y} = \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_N \end{bmatrix}
+\end{split}\]</div>
+<p>Let <span class="math notranslate nohighlight">\(p_k = p(t_k)\)</span>, <span class="math notranslate nohighlight">\(q_k = q(t_k)\)</span> and <span class="math notranslate nohighlight">\(r_k = r(t_k)\)</span>, and substitute the central difference formulas for both <span class="math notranslate nohighlight">\(y''\)</span> and <span class="math notranslate nohighlight">\(y'\)</span> at <span class="math notranslate nohighlight">\(t_k\)</span> into the differential equation</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{y_{k+1} -2y_k + y_{k-1}}{h^2} + p_k \frac{y_{k+1} - y_{k-1}}{2h} + q_k y_k = r_k
+\]</div>
+<p>Rearrange the equation</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+y_{k+1} -2y_k + y_{k-1} + \frac{h p_k}{2} \left( y_{k+1} - y_{k-1} \right) + h^2q_k y_k &amp;= h^2 r_k \\
+\left( 1 - \frac{h p_k}{2} \right) y_{k-1} + (h^2q_k - 2)y_k + \left(1 + \frac{h p_k}{2} \right)y_{k+1} &amp;= h^2 r_k
+\end{align*}
+\end{split}\]</div>
+<p>Introduce the notation</p>
+<div class="math notranslate nohighlight">
+\[
+a_k = 1 - \frac{h p_k}{2}
+\hspace{10mm}
+b_k = h^2q_k - 2
+\hspace{10mm}
+c_k = 1 + \frac{h p_k}{2}
+\]</div>
+<p>Use the boundary conditions <span class="math notranslate nohighlight">\(y_0 = \alpha\)</span> and <span class="math notranslate nohighlight">\(y_{N+1} = \beta\)</span> and rearrange the equations</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{rrrrcrrrrcc}
+b_1 y_1 &amp; + &amp; c_1 y_2 &amp; &amp; &amp; &amp; &amp; &amp; &amp; = &amp; h^2 r_1 - \left( 1 - h p_1/2 \right) \alpha \\
+a_2 y_1 &amp; + &amp; b_2 y_2 &amp; + &amp; c_2 y_3 &amp; &amp; &amp; &amp; &amp; = &amp; h^2 r_2 \\
+&amp; &amp; &amp; &amp; \ddots &amp; &amp; &amp; &amp; &amp; \vdots &amp; \\
+&amp; &amp; &amp; &amp; a_{N-1}y_{N-2} &amp; + &amp; b_{N-1}y_{N-1} &amp; + &amp; c_{N-1}y_N &amp; = &amp; h^2 r_{N-1} \\
+&amp; &amp; &amp; &amp; &amp; &amp; a_Ny_{N-1} &amp; + &amp; b_Ny_N &amp; = &amp; h^2 r_N - \left( 1 + h p_N/2 \right) \beta
+\end{array}
+\end{split}\]</div>
+<p>Rewrite in matrix form <span class="math notranslate nohighlight">\(A \boldsymbol{y} = \boldsymbol{b}\)</span> where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A =
+\left[ \begin{array}{rrcrr}
+b_1 &amp; c_1 &amp; &amp; &amp; \\
+a_2 &amp; b_2 &amp; c_2 &amp; &amp; \\
+&amp; &amp; \ddots &amp; &amp; \\
+&amp; &amp; a_{N-1} &amp; b_{N-1} &amp; c_{N-1} \\
+&amp; &amp; &amp; a_N &amp; b_N
+\end{array} \right]
+\hspace{10mm}
+\boldsymbol{b} =
+\begin{bmatrix}
+h^2 r_1 - \left( 1 - h p_1/2 \right) \alpha \\ h^2 r_2 \\ \vdots \\ h^2 r_{N-1} \\ h^2 r_N - \left( 1 + h p_N/2 \right) \beta
+\end{bmatrix}
+\end{split}\]</div>
+</div>
+<div class="example docutils">
+<p>Consider the differential equation with boundary conditions</p>
+<div class="math notranslate nohighlight">
+\[
+y'' + t^2y' + y = \cos(t) \ \ , \ \ y(0) = 0 \ , \ \ y(3) = 0
+\]</div>
+<p>Solving the linear system derived above with <span class="math notranslate nohighlight">\(N=19\)</span> produces the result</p>
+<a class="reference internal image-reference" href="../_images/01_04_04.png"><img alt="../_images/01_04_04.png" class="align-center" src="../_images/01_04_04.png" style="width: 500px;" /></a>
+</div>
+<div class="example docutils">
+<p>Consider a second order linear ordinary differential equation with boundary conditions of the form</p>
+<div class="math notranslate nohighlight">
+\[
+y'' = r(t) \ \ , \ \ y'(t_0) = \alpha \ , \ \ y(t_f) = \beta
+\]</div>
+<p>Note that the boundary condition at <span class="math notranslate nohighlight">\(t_0\)</span> specifies the value of the derivative <span class="math notranslate nohighlight">\(y'(t_0) = \alpha\)</span>. Use the same notation as in the examples above and apply the central difference formula</p>
+<div class="math notranslate nohighlight">
+\[
+y_{k-1} -2y_k + y_{k+1} = h^2 r_k
+\]</div>
+<p>Therefore we have <span class="math notranslate nohighlight">\(N\)</span> equations</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{array}{rrrrrrcrrrrrrcc}
+y_0 &amp; - &amp; 2y_1 &amp; + &amp; y_2 &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; = &amp; h^2 r_1 \\
+&amp; &amp; y_1 &amp; - &amp; 2y_2 &amp; + &amp; y_3 &amp; &amp; &amp; &amp; &amp; &amp; &amp; = &amp; h^2 r_2 \\
+&amp; &amp; &amp; &amp; &amp; &amp; \ddots &amp; &amp; &amp; &amp; &amp; &amp; &amp; \vdots &amp; \\
+&amp; &amp; &amp; &amp; &amp; &amp; y_{N-2} &amp; - &amp; 2y_{N-1} &amp; + &amp; y_N &amp; &amp; &amp; = &amp; h^2 r_{N-1} \\
+&amp; &amp; &amp; &amp; &amp; &amp; &amp; &amp; y_{N-1} &amp; - &amp; 2y_N &amp; + &amp; y_{N+1} &amp; = &amp; h^2 r_N
+\end{array}
+\end{split}\]</div>
+<p>We can use <span class="math notranslate nohighlight">\(y_{N+1} = \beta\)</span> and move the term to the right side in the last equation but <span class="math notranslate nohighlight">\(y_0\)</span> in the first equation is unknown. Use the forward difference formula to approximate <span class="math notranslate nohighlight">\(y_0\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+y'(t_0) \approx \frac{y(t_1) - y(t_0)}{h}
+\ \ \Rightarrow \ \
+y_0 = y_1 - h \alpha
+\]</div>
+<p>Therefore we can write the equations in matrix form <span class="math notranslate nohighlight">\(A \boldsymbol{y} = \boldsymbol{b}\)</span> where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A =
+\left[ \begin{array}{rrcrr}
+-1 &amp; 1 &amp; &amp; &amp; \\
+1 &amp; -2 &amp; 1 &amp; &amp; \\
+&amp; &amp; \ddots &amp; &amp; \\
+&amp; &amp; 1 &amp; -2 &amp; 1 \\
+&amp; &amp; &amp; 1 &amp; -2
+\end{array} \right]
+\hspace{10mm}
+\boldsymbol{b} =
+\begin{bmatrix}
+h^2 r_1 + h\alpha \\ h^2 r_2 \\ \vdots \\ h^2 r_{N-1} \\ h^2 r_N - \beta
+\end{bmatrix}
+\end{split}\]</div>
+</div>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<p><strong>Exercise 1.</strong> Determine whether the statement is <strong>True</strong> or <strong>False</strong>.</p>
+<ul class="simple">
+<li><p>The finite difference method applied to a linear second order differential equation with boundary conditions will compute exact values of the solution <span class="math notranslate nohighlight">\(y_k = y(t_k)\)</span> if the step size <span class="math notranslate nohighlight">\(h\)</span> is chosen to be small enough.</p></li>
+<li><p>The finite difference method applied to a linear second order differential equation with boundary conditions  will never compute exact values of the solution <span class="math notranslate nohighlight">\(y_k = y(t_k)\)</span> for any differential equation and step size <span class="math notranslate nohighlight">\(h\)</span>.</p></li>
+</ul>
+<p><strong>Exercise 2.</strong> Suppose we discretize the domain <span class="math notranslate nohighlight">\([0,1]\)</span> of a differential equation with boundary conditions</p>
+<div class="math notranslate nohighlight">
+\[
+y'' + p(t)y' + q(t)y = r(t) \ \ , \ \ y(0) = \alpha \ \ , \ \ y(1) = \beta
+\]</div>
+<p>with step size <span class="math notranslate nohighlight">\(h=0.1\)</span> and derive a linear system <span class="math notranslate nohighlight">\(A \boldsymbol{y} = \boldsymbol{b}\)</span>. How many unknown values <span class="math notranslate nohighlight">\(y_k\)</span> are we solving for in this case?</p>
+<p><strong>Exercise 3.</strong> Setup a linear system <span class="math notranslate nohighlight">\(A \boldsymbol{y} = \boldsymbol{b}\)</span> to approximate the solution of the equation with boundary conditions</p>
+<div class="math notranslate nohighlight">
+\[
+y'' = 2^t \ \ , \ \ y'(0) = 1 \ , \ \ y(1) = 0
+\]</div>
+<p>using step size <span class="math notranslate nohighlight">\(h=0.25\)</span>. Use the forward difference formula and the boundary condition <span class="math notranslate nohighlight">\(y'(0)=1\)</span> to approximate the boundary value <span class="math notranslate nohighlight">\(y_0\)</span>.</p>
+<p><strong>Exercise 4.</strong> Derive the general form of the linear system <span class="math notranslate nohighlight">\(A \boldsymbol{y} = \boldsymbol{b}\)</span> for an equation with boundary conditions</p>
+<div class="math notranslate nohighlight">
+\[
+y'' + p(t)y' = r(t) \ \ , \ \ y(t_0) = \alpha \ \ , \ \ y(t_f) = \beta
+\]</div>
+<p>using the forward difference formula to approximate <span class="math notranslate nohighlight">\(y'\)</span>. Use the notation as in the examples: choose <span class="math notranslate nohighlight">\(N\)</span>, let  <span class="math notranslate nohighlight">\(h = (t_f - t_0)/(N+1)\)</span> and <span class="math notranslate nohighlight">\(t_k = t_0 + kh\)</span>, let <span class="math notranslate nohighlight">\(y_k\)</span> denote an approximation of <span class="math notranslate nohighlight">\(y(t_k)\)</span> and note <span class="math notranslate nohighlight">\(y_0 = \alpha\)</span> and <span class="math notranslate nohighlight">\(y_{N+1} = \beta\)</span>.</p>
+<p><strong>Exercise 5.</strong> Explain why it is not possible to derive a linear system <span class="math notranslate nohighlight">\(A \boldsymbol{y} = \boldsymbol{b}\)</span> for the equation</p>
+<div class="math notranslate nohighlight">
+\[
+y'' = \cos(y) \ \ , \ \ y(0) = 0 \ \ , \ \ y(1) = \frac{\pi}{4}
+\]</div>
+<p>by applying finite difference formulas.</p>
+<p><strong>Exercise 6.</strong> Suppose we compute the finite difference approximation of the equation</p>
+<div class="math notranslate nohighlight">
+\[
+y'' = \frac{5}{1 + t^4} \ \ , \ \ y(0) = 0 \ \ , \ \ y(1) = 1
+\]</div>
+<p>with 5 equally spaced points from <span class="math notranslate nohighlight">\(t_0 = 0\)</span> to <span class="math notranslate nohighlight">\(t_4 = 1\)</span> and find <span class="math notranslate nohighlight">\(y_1 = -0.19554177\)</span> and <span class="math notranslate nohighlight">\(y_3 = 0.35872678\)</span>. Determine <span class="math notranslate nohighlight">\(y_2\)</span>.</p>
+<p><strong>Exercise 7.</strong> Setup a linear system <span class="math notranslate nohighlight">\(A \boldsymbol{y} = \boldsymbol{b}\)</span> for the finite difference approximation of</p>
+<div class="math notranslate nohighlight">
+\[
+y'' + ty = 0 \ \ , \ \ y(1) = 1 \ \ , \ \ y(3) = -1
+\]</div>
+<p>using 5 equally spaced points from <span class="math notranslate nohighlight">\(t_0 = 1\)</span> to <span class="math notranslate nohighlight">\(t_4 = 3\)</span>.</p>
+<p><strong>Exercise 8.</strong> Setup a linear system <span class="math notranslate nohighlight">\(A \boldsymbol{y} = \boldsymbol{b}\)</span> for the finite difference approximation of</p>
+<div class="math notranslate nohighlight">
+\[
+y'' + ty = 0 \ \ , \ \ y(1) = 1 \ \ , \ \ y'(3) = -1
+\]</div>
+<p>using 5 equally spaced points from <span class="math notranslate nohighlight">\(t_0 = 1\)</span> to <span class="math notranslate nohighlight">\(t_4 = 3\)</span>. (Hint: use the backwards difference formula to approximate <span class="math notranslate nohighlight">\(y_4\)</span>.)</p>
+<p><strong>Exercise 9.</strong> Setup the linear system <span class="math notranslate nohighlight">\(A \boldsymbol{y} = \boldsymbol{b}\)</span> corresponding to the finite difference method applied to the equation</p>
+<div class="math notranslate nohighlight">
+\[
+y'' + y' = t^2 \ \ , \ \ y(-1) = y(1) = 0
+\]</div>
+<p>using 9 equally spaced points on the domain <span class="math notranslate nohighlight">\([-1,1]\)</span>.</p>
+<p><strong>Exercise 10.</strong> Setup the linear system <span class="math notranslate nohighlight">\(A\boldsymbol{y} = \boldsymbol{b}\)</span> corresponding to the finite difference method applied to the equation</p>
+<div class="math notranslate nohighlight">
+\[
+y'' + \cos(t) y = \sin(t) \ \ , \ \ y(0) = y(2\pi) = 0
+\]</div>
+<p>using 9 equally spaced points on the domain <span class="math notranslate nohighlight">\([0,2\pi]\)</span>.</p>
+<p><strong>Exercise 11.</strong> Setup the linear system <span class="math notranslate nohighlight">\(A\boldsymbol{y} = \boldsymbol{b}\)</span> corresponding to the finite difference method applied to the equation</p>
+<div class="math notranslate nohighlight">
+\[
+y'' + \sin(t) y = \cos^2(t) \ \ , \ \ y(0) = y(2\pi) = 0
+\]</div>
+<p>using 9 equally spaced points on the domain <span class="math notranslate nohighlight">\([0,2\pi]\)</span>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./systems"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="interpolation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Interpolation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../orthogonality/subspaces.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Subspaces</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#second-order-differential-equations">Second Order Differential Equations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-difference-method">Finite Difference Method</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By UBC Math
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
