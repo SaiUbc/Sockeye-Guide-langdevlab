@@ -152,8 +152,8 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../_static/nn.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../_static/nn.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
   
   
 </a></div>
@@ -353,7 +353,7 @@ document.write(`
 </div>
 </div>
               
-              
+
 
 <div id="jb-print-docs-body" class="onlyprint">
     <h1>Software Requirements</h1>
@@ -366,8 +366,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-elimination">Gaussian Elimination</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Software Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-req">Basic Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macos">MacOS</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-and-backward-substitution">Forward and Backward Substitution</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
 </ul>
@@ -381,173 +381,34 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="lu-decomposition">
-<h1>Software Requirements<a class="headerlink" href="#lu-decomposition" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="software-requirements">
+<h1>Software Requirements<a class="headerlink" href="#software-requirements" title="Permalink to this heading">#</a></h1>
 <div class="bigidea docutils">
-<p>Record the row operations of the Gaussian elimination algorithm in the LU decomposition and use the decomposition <span class="math notranslate nohighlight">\(A = LU\)</span> in backward/forward subsitution to efficiently solve a system of linear equations <span class="math notranslate nohighlight">\(A \boldsymbol{x} = \boldsymbol{b}\)</span>.</p>
+<p> Sockeye is a high-performance computing platform available to UBC researchers in any discipline by the UBC Advanced Research Computing. Sockeye provides access to 15,872 CPU cores and 200 GPUs. That's a lot of computing power! 🤯</p>
 </div>
-<a class="reference internal image-reference" href="../_images/01_01_01.png"><img alt="../_images/01_01_01.png" class="align-center" src="../_images/01_01_01.png" style="width: 100%;" /></a>
-<section id="gaussian-elimination">
-<h2>Gaussian Elimination<a class="headerlink" href="#gaussian-elimination" title="Permalink to this heading">#</a></h2>
-<div class="definition docutils">
-<p>A <strong>linear system of equations</strong> is a collection of equations of the form</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{array}{ccccccccc}
-a_{1,1} x_1 &amp; + &amp; a_{1,2} x_2 &amp; + &amp; \cdots &amp; + &amp; a_{1,n} x_n &amp; = &amp; b_1 \\
-a_{2,1} x_1 &amp; + &amp; a_{2,2} x_2 &amp; + &amp; \cdots &amp; + &amp; a_{2,n} x_n &amp; = &amp; b_2 \\
-&amp; \vdots &amp; &amp; &amp; &amp; \vdots &amp; &amp; \vdots &amp; \\
-a_{m,1} x_1 &amp; + &amp; a_{m,2} x_2 &amp; + &amp; \cdots &amp; + &amp; a_{m,n} x_n &amp; = &amp; b_m
-\end{array}
-\end{split}\]</div>
-<p>where the coefficients <span class="math notranslate nohighlight">\(a_{i,j}\)</span> and <span class="math notranslate nohighlight">\(b_i\)</span> are known constants and <span class="math notranslate nohighlight">\(x_i\)</span> are unknown variables. In matrix notation, a linear system is <span class="math notranslate nohighlight">\(A \boldsymbol{x} = \boldsymbol{b}\)</span> where</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-A =
-\begin{bmatrix}
-a_{1,1} &amp; a_{1,2} &amp; \cdots &amp; a_{1,n} \\
-a_{2,1} &amp; a_{2,2} &amp; \cdots &amp; a_{2,n} \\
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-a_{m,1} &amp; a_{m,2} &amp; \cdots &amp; a_{m,n}
-\end{bmatrix}
-\hspace{10mm}
-\boldsymbol{x} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}
-\hspace{10mm}
-\boldsymbol{b} = \begin{bmatrix} b_1 \\ b_2 \\ \vdots \\ b_m \end{bmatrix}
-\end{split}\]</div>
-</div>
-<div class="definition docutils">
-<p>There are three types of <strong>elementary row operations</strong> are:</p>
-<ol class="arabic simple">
-<li><p>Interchange two rows.</p></li>
-<li><p>Multiply a row by a nonzero number.</p></li>
-<li><p>Add a multiple of a row to another row.</p></li>
-</ol>
-</div>
-<div class="definition docutils">
-<p>A matrix is in <strong>row echelon form</strong> if:</p>
-<ol class="arabic simple">
-<li><p>All zero rows are at the bottom.</p></li>
-<li><p>The first nonzero entry in a row (from the left) is located to the right of the first nonzero entry in every row above.</p></li>
-</ol>
-</div>
-<div class="example docutils">
-<p>The following matrices are in row echelon form:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{bmatrix} \times &amp; * &amp; * \\ 0 &amp; \times &amp; * \\ 0 &amp; 0 &amp; \times \end{bmatrix} \hspace{10mm}
-\begin{bmatrix} \times &amp; * &amp; * &amp; * &amp; * \\ 0 &amp; \times &amp; * &amp; * &amp; * \\ 0 &amp; 0 &amp; \times &amp; * &amp; * \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix} \hspace{10mm}
-\begin{bmatrix} \times &amp; * &amp; * &amp; * &amp; * \\ 0 &amp; 0 &amp; \times &amp; * &amp; * \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; \times \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix} \hspace{10mm}
-\begin{bmatrix} \times &amp; * \\ 0 &amp; 0 \end{bmatrix}
-\end{split}\]</div>
-<p>Symbol <span class="math notranslate nohighlight">\(\times\)</span> denotes a nonzero entry and <span class="math notranslate nohighlight">\(*\)</span> is any value.</p>
-</div>
-<div class="definition docutils">
-<p>The <strong>Gaussian elimination algorithm</strong> applies a sequence of elementary row operations to transform a matrix to row echelon form. See <a class="reference external" href="https://en.wikipedia.org/wiki/Gaussian_elimination">Wikipedia:Gaussian Elimination</a> to review how the algorithm works.</p>
-</div>
-<div class="definition docutils">
-<p>Let <span class="math notranslate nohighlight">\(A\)</span> be a matrix and let <span class="math notranslate nohighlight">\(U\)</span> be a matrix in row echelon form obtained from <span class="math notranslate nohighlight">\(A\)</span> through a sequence of elementary row operations. The <strong>rank</strong> of <span class="math notranslate nohighlight">\(A\)</span> is the number of nonzero rows in <span class="math notranslate nohighlight">\(U\)</span>. Denote the rank of a matrix <span class="math notranslate nohighlight">\(A\)</span> by <span class="math notranslate nohighlight">\(\mathrm{rank}(A)\)</span>.</p>
-</div>
-<div class="definition docutils">
-<p>Let <span class="math notranslate nohighlight">\(A\)</span> be a <span class="math notranslate nohighlight">\(m \times n\)</span> matrix with <span class="math notranslate nohighlight">\(\mathrm{rank}(A) = r\)</span>.</p>
-<p>The system <span class="math notranslate nohighlight">\(A \boldsymbol{x} = \boldsymbol{b}\)</span> is <strong>inconsistent</strong> (ie. no solution) if <span class="math notranslate nohighlight">\(\mathrm{rank}(A) &lt; \mathrm{rank}([ \, A \ \boldsymbol{b} \, ])\)</span>. In other words, the row echelon form of the augmented matrix <span class="math notranslate nohighlight">\([ \, A \ \boldsymbol{b} \, ]\)</span> has a row of the form</p>
-<div class="math notranslate nohighlight">
-\[
-\begin{array}{rrrr|r} 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 1 \end{array}
-\]</div>
-<p>which implies <span class="math notranslate nohighlight">\(0 = 1\)</span>.</p>
-<p>The system has a <strong>unique solution</strong> when <span class="math notranslate nohighlight">\(\mathrm{rank}(A) = \mathrm{rank}([ \, A \ \boldsymbol{b} \, ])\)</span> and <span class="math notranslate nohighlight">\(\mathrm{rank}(A) = n\)</span>. In other words, the system is consistent and the rank of <span class="math notranslate nohighlight">\(A\)</span> is equal to the number of variables in the system.</p>
-<p>The system has <strong>infinitely many solutions</strong> when <span class="math notranslate nohighlight">\(\mathrm{rank}(A) = \mathrm{rank}([ \, A \ \boldsymbol{b} \, ])\)</span> and <span class="math notranslate nohighlight">\(\mathrm{rank}(A) &lt; n\)</span>.</p>
-</div>
-<div class="example docutils">
-<p>Find all solutions of <span class="math notranslate nohighlight">\(A \boldsymbol{x} = \boldsymbol{b}\)</span> where</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-A = \begin{bmatrix} 1 &amp; 1 &amp; 1 \\ 1 &amp; 0 &amp; 1 \\ 2 &amp; 5 &amp; 2 \end{bmatrix} \hspace{10mm} \boldsymbol{b} = \begin{bmatrix} 2 \\ 1 \\ 7 \end{bmatrix}
-\end{split}\]</div>
-<p>Add -1 times row 1 to row 2, and add -2 times row 1 to row 3:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\left[ \begin{array}{rrr|r} 1 &amp; 1 &amp; 1 &amp; 2 \\ 1 &amp; 0 &amp; 1 &amp; 1 \\ 2 &amp; 5 &amp; 2 &amp; 7 \end{array} \right]
-\longrightarrow
-\left[ \begin{array}{rrr|r} 1 &amp; 1 &amp; 1 &amp; 2 \\ 0 &amp; -1 &amp; \phantom{+}0 &amp; -1 \\ 0 &amp; 3 &amp; 0 &amp; 3 \end{array} \right]
-\end{split}\]</div>
-<p>Add 3 times row 2 to row 3:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\left[ \begin{array}{rrr|r} 1 &amp; 1 &amp; 1 &amp; 2 \\ 0 &amp; -1 &amp; \phantom{+}0 &amp; -1 \\ 0 &amp; 3 &amp; 0 &amp; 3 \end{array} \right]
-\longrightarrow
-\left[ \begin{array}{rrr|r} 1 &amp; 1 &amp; 1 &amp; 2 \\ 0 &amp; -1 &amp; \phantom{+}0 &amp; -1 \\ 0 &amp; 0 &amp; 0 &amp; 0 \end{array} \right]
-\end{split}\]</div>
-<p>Since there is no leading one in column 3, assign the free variable <span class="math notranslate nohighlight">\(t\)</span> to <span class="math notranslate nohighlight">\(x_3\)</span>. The second row implies <span class="math notranslate nohighlight">\(x_2 = 1\)</span> and the first row gives us</p>
-<div class="math notranslate nohighlight">
-\[
-x_1 = 2 - x_2 - x_3 = 1 - t
-\]</div>
-<p>There are infinitely many solutions</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{bmatrix} 1-t \\ 1 \\ t \end{bmatrix} \ , \ \ t \in \mathbb{R}
-\end{split}\]</div>
-</div>
-<div class="example docutils">
-<p>Find all solutions of <span class="math notranslate nohighlight">\(A \boldsymbol{x} = \boldsymbol{b}\)</span> where</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-A = \left[ \begin{array}{rrrr} 1 &amp; -1 &amp; \phantom{+}1 &amp; -2 \\ -1 &amp; 1 &amp; 1 &amp; 1 \\ -1 &amp; 2 &amp; 3 &amp; 1 \\ 1 &amp; -1 &amp; 2 &amp; 1 \end{array} \right] \hspace{10mm} \boldsymbol{b} = \left[ \begin{array}{r} 1 \\ -1 \\ 2 \\ 1 \end{array} \right]
-\end{split}\]</div>
-<p>Add row 1 to row 2, add row 2 to row 3 and add -1 times row 1 to row 4:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\left[ \begin{array}{rrrr|r} 1 &amp; -1 &amp; \phantom{+}1 &amp; -2 &amp; 1 \\ -1 &amp; 1 &amp; 1 &amp; 1 &amp; -1 \\ -1 &amp; 2 &amp; 3 &amp; 1 &amp; 2 \\ 1 &amp; -1 &amp; 2 &amp; 1 &amp; 1 \end{array} \right]
-\longrightarrow
-\left[ \begin{array}{rrrr|r} 1 &amp; -1 &amp; \phantom{+}1 &amp; -2 &amp; \phantom{+}1 \\ 0 &amp; 0 &amp; 2 &amp; -1 &amp; 0 \\ 0 &amp; 1 &amp; 4 &amp; -1 &amp; 3 \\ 0 &amp; 0 &amp; 1 &amp; 3 &amp; 0 \end{array} \right]
-\end{split}\]</div>
-<p>Move row 2 to the bottom:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\left[ \begin{array}{rrrr|r} 1 &amp; -1 &amp; \phantom{+}1 &amp; -2 &amp; \phantom{+}1 \\ 0 &amp; 0 &amp; 2 &amp; -1 &amp; 0 \\ 0 &amp; 1 &amp; 4 &amp; -1 &amp; 3 \\ 0 &amp; 0 &amp; 1 &amp; 3 &amp; 0 \end{array} \right]
-\longrightarrow
-\left[ \begin{array}{rrrr|r} 1 &amp; -1 &amp; \phantom{+}1 &amp; -2 &amp; \phantom{+}1 \\ 0 &amp; 1 &amp; 4 &amp; -1 &amp; 3 \\ 0 &amp; 0 &amp; 1 &amp; 3 &amp; 0 \\ 0 &amp; 0 &amp; 2 &amp; -1 &amp; 0 \end{array} \right]
-\end{split}\]</div>
-<p>Add -2 times row 3 to row 4:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\left[ \begin{array}{rrrr|r} 1 &amp; -1 &amp; \phantom{+}1 &amp; -2 &amp; \phantom{+}1 \\ 0 &amp; 1 &amp; 4 &amp; -1 &amp; 3 \\ 0 &amp; 0 &amp; 1 &amp; 3 &amp; 0 \\ 0 &amp; 0 &amp; 2 &amp; -1 &amp; 0 \end{array} \right]
-\longrightarrow
-\left[ \begin{array}{rrrr|r} 1 &amp; -1 &amp; \phantom{+}1 &amp; -2 &amp; \phantom{+}1 \\ 0 &amp; 1 &amp; 4 &amp; -1 &amp; 3 \\ 0 &amp; 0 &amp; 1 &amp; 3 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; -7 &amp; 0 \end{array} \right]
-\end{split}\]</div>
-<p>There is a unique solution</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\boldsymbol{x} = \begin{bmatrix} 4 \\ 3 \\ 0 \\ 0 \end{bmatrix}
-\end{split}\]</div>
-</div>
-<div class="example docutils">
-<p>Find all solutions of <span class="math notranslate nohighlight">\(A \boldsymbol{x} = \boldsymbol{b}\)</span> where</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-A = \begin{bmatrix} 1 &amp; 1 &amp; 2 &amp; 1 \\ 1 &amp; 0 &amp; 1 &amp; 1 \\ 0 &amp; 1 &amp; 1 &amp; 0 \end{bmatrix} \hspace{10mm} \boldsymbol{b} = \begin{bmatrix} 1 \\ 1 \\ 2 \end{bmatrix}
-\end{split}\]</div>
-<p>Add -1 times row 1 to row 2:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\left[ \begin{array}{rrrr|r} 1 &amp; 1 &amp; 2 &amp; 1 &amp; 1 \\ 1 &amp; 0 &amp; 1 &amp; 1 &amp; 1 \\ 0 &amp; 1 &amp; 1 &amp; 0 &amp; 2 \end{array} \right]
-\longrightarrow
-\left[ \begin{array}{rrrr|r} 1 &amp; 1 &amp; 2 &amp; 1 &amp; 1 \\ 0 &amp; -1 &amp; -1 &amp; \phantom{+}0 &amp; 0 \\ 0 &amp; 1 &amp; 1 &amp; 0 &amp; 2 \end{array} \right]
-\end{split}\]</div>
-<p>Add row 2 to row 3:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\left[ \begin{array}{rrrr|r} 1 &amp; 1 &amp; 2 &amp; 1 &amp; 1 \\ 0 &amp; -1 &amp; -1 &amp; \phantom{+}0 &amp; 0 \\ 0 &amp; 1 &amp; 1 &amp; 0 &amp; 2 \end{array} \right]
-\longrightarrow
-\left[ \begin{array}{rrrr|r} 1 &amp; 1 &amp; 2 &amp; 1 &amp; 1 \\ 0 &amp; -1 &amp; -1 &amp; \phantom{+}0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 2 \end{array} \right]
-\end{split}\]</div>
-<p>The systems is inconsistent. In other words, there is no solution.</p>
-</div>
+<a class="reference internal image-reference" href="../_images/sockeye.jpeg"><img alt="../_images/sockeye.jpeg" class="align-center" src="../_images/sockeye.jpeg" style="width: 100%;" /></a>
+<p> This is a picture of the actual High-Performance Computers (HPC's) at the basement of ARC 😍</p>
+
+
+<section id="basic-req">
+<h2>Basic requirements<a class="headerlink" href="#basic-req" title="Permalink to this heading">#</a></h2>
+<p>There are only three simple prerequsites for using Sockeye: </p>
+<ul>
+  <li>
+    <p><strong> Stable Connection to UBC Wifi:</strong> If you are using one of the lab computers or are connected to the UBC wifi (ubc secure ideally), then this shouldn't be an issue. <p>However, if you're working off campus, you need to connect to the UBC myVPN client to access sockeye outside campus. The VPN client is by cisco and needs to be locally installed on your computer.</p> <p>Click <a href="https://it.ubc.ca/services/email-voice-internet/myvpn">here </a> to see how to setup myVPN</p> </p>
+  </li>
+  <li>
+    <p><strong>UBC Secure (CWL)Campus-Wide Login:</strong> Along with your allocation code, you need to ensure that your own CWL is a secure CWL with Duo (MFA) Multi Factor Authentication enabled.</p> <p>Sockeye does this for security reasons, click <a href="https://it.ubc.ca/services/accounts-passwords/multi-factor-authentication-mfa">here</a> to setup MFA</p>
+  </li>
+  <li>
+    <p><strong>A Computer (duh 🤦🏻‍♂️):</strong> Sockeye can be run on the Windows, MacOS as well as Linux operating systems. Although possible through 3rd-party software, avoid running it on a iPad or your mobile phone.</p>
+  </li>
+</ul>
 </section>
-<section id="id1">
-<h2>LU Decomposition<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+
+
+<section id="macos">
+<h2>MacOS<a class="headerlink" href="#macos" title="Permalink to this heading">#</a></h2>
 <div class="definition docutils">
 <p>A <strong>lower triangular matrix</strong> is a matrix with zeros above the diagonal. For example:</p>
 <div class="math notranslate nohighlight">
@@ -1127,8 +988,8 @@ A = \begin{bmatrix} 2 &amp; 0 \\ 4 &amp; 3 \end{bmatrix} \left[ \begin{array}{rr
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-elimination">Gaussian Elimination</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">LU Decomposition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-req">Basic Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#macos">MacOS</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-and-backward-substitution">Forward and Backward Substitution</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
 </ul>
